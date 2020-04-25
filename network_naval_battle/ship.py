@@ -8,3 +8,8 @@ class Ship:
 
     def kill(self):
         self.__is_alive = False
+
+    def __str__(self):
+        if self.is_alive:
+            return '[]'
+        return '[x]'
