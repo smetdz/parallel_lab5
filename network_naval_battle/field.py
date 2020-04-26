@@ -1,12 +1,10 @@
 from ship import Ship
-from gamer import Gamer
 from random import randint
 
 
 class Field:
     _cell_types = {
         'water': '~',
-        'destroyed': 'X',
         'fired': '*',
         'taken': '',
         'ship': Ship()
@@ -14,35 +12,34 @@ class Field:
 
     _fields = list()
 
-    def __init__(self, gamer: Gamer):
+    def __init__(self):
         self._field = [[self._cell_types['water'] for _ in range(10)] for _ in range(10)]
-        self._gamer = gamer
         self._fields.append(self)
 
     @staticmethod
-    def _neg_check(x: int, y: int):
-        if (x < 0) or (y < 0):
-            raise NegativeParameter
+    def _check(x: int, y: int):
+        if x not in range(0, 10) or y not in range(0, 10):
+            raise BadParameter
 
-    def _set_around(self, x: int, y: int, new_type: str):
+    def set_around(self, x: int, y: int, new_type: str):
         for i in range(x - 1, x + 2):
             for j in range(y - 1, y + 2):
                 if i == x and j == y:
                     continue
                 try:
-                    self._change_cell_type(i, y, new_type)
-                except NegativeParameter:
+                    self.change_cell_type(i, j, new_type)
+                except BadParameter:
                     continue
 
     def try_to_place_ship(self, x: int, y: int):
         if self._field[x][y] != self._cell_types['taken']:
-            self._change_cell_type(x, y, 'ship')
-            self._set_around(x, y, 'taken')
+            self.change_cell_type(x, y, 'ship')
+            self.set_around(x, y, 'taken')
         else:
             raise InaccessiblePlace
 
-    def _change_cell_type(self, x: int, y: int, new_type: str):
-        self._neg_check(x, y)
+    def change_cell_type(self, x: int, y: int, new_type: str):
+        self._check(x, y)
 
         if new_type == 'ship':
             self._field[x][y] = Ship(x, y)
@@ -50,7 +47,7 @@ class Field:
             self._field[x][y] = self._cell_types[new_type]
 
     def get_cell(self, x: int, y: int):
-        self._neg_check(x, y)
+        self._check(x, y)
 
         return self._field[x][y]
 
@@ -71,9 +68,11 @@ class Field:
     def _create_line(line: list):
         result = ''
         for cell in line:
-            if cell:
+            if isinstance(cell, Ship):
+                result += str(cell)
+            elif cell:
                 print(cell, end=' ')
-                result += cell + ' '
+                result += str(cell) + ' '
             else:
                 print('~', end=' ')
                 result += '~ '
@@ -81,25 +80,37 @@ class Field:
         return result
 
     def __str__(self):
-        result = ''
-        for line in self._field:
-            result += self._create_line(line) + '\n'
+        result = '  '
+        for i in range(10):
+            result += f'{i} '
+
+        result += '\n'
+
+        for i, line in enumerate(self._field):
+            result += f"{i} " + self._create_line(line) + '\n'
             print()
 
         return result
 
     @classmethod
     def show_both_fields(cls):
-        result = ''
+        result = '  '
+        for i in range(10):
+            result += f'{i} '
+
+        result += ' ' * 6 + result + '\n'
+
         for i in range(10):
             for field in cls._fields:
-                result += cls._create_line(field[i]) + ' ' * 6
+                result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
                 print(' ' * 6)
+
+            result += '\n'
 
         return result
 
 
-class NegativeParameter(Exception):
+class BadParameter(Exception):
     pass
 
 
