@@ -1,6 +1,8 @@
 class Ship:
-    def __init__(self):
+    def __init__(self, x: int = None, y: int = None):
         self.__is_alive = True
+        self.x = x
+        self.y = y
 
     @property
     def is_alive(self):
