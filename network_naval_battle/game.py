@@ -56,21 +56,22 @@ class Game:
 
             break
 
-    def _show_fields(self, player1: Player, c_p: int):
-        message = Field.show_both_fields(c_p)
-        self._tell_the_player(player1, message)
+    def _show_fields(self, player1: Player, player2: Player):
+        message1 = Field.show_both_fields(1)
+        message2 = Field.show_both_fields(2)
+
+        self._tell_the_player(player1, message1)
+        self._tell_the_player(player2, message2)
 
     def _game_process(self, player1: Player, player2: Player):
         self._ship_arrangement(player1)
         self._ship_arrangement(player2)
 
         while True:
-            self._show_fields(player1, 1)
-            self._show_fields(player2, 2)
+            self._show_fields(player1, player2)
             self._move(player1, player2)
 
-            self._show_fields(player1, 1)
-            self._show_fields(player2, 2)
+            self._show_fields(player1, player2)
             self._move(player2, player1)
 
             if player1.is_lose:
