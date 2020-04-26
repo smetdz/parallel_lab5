@@ -94,8 +94,6 @@ class Game:
         if int(answer) - 1:
             ships_count = 6
             while ships_count:
-                for line in player.field._field:
-                    print(line)
                 message = str(player.field) + "\n Select the cell where you want to put the ship\n" \
                                               "The answer should be this kind: x y"
 
