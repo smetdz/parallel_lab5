@@ -4,8 +4,8 @@ from random import randint
 
 class Field:
     _cell_types = {
-        'water': '~',
-        'fired': '*',
+        'water': ' ~ ',
+        'fired': ' * ',
         'taken': '',
         'ship': Ship()
     }
@@ -69,20 +69,39 @@ class Field:
         result = ''
         for cell in line:
             if isinstance(cell, Ship):
-                result += str(cell)
+                result += str(cell) + ' '
             elif cell:
                 print(cell, end=' ')
                 result += str(cell) + ' '
             else:
-                print('~', end=' ')
-                result += '~ '
+                print(' ~ ', end=' ')
+                result += ' ~  '
+
+        return result
+
+    @staticmethod
+    def _create_hidden_line(line: list):
+        result = ''
+        for cell in line:
+            if isinstance(cell, Ship):
+                if cell.is_alive:
+                    result += ' ~  '
+                else:
+                    print(cell, end=' ')
+                    result += str(cell) + ' '
+            elif cell:
+                print(cell, end=' ')
+                result += str(cell) + ' '
+            else:
+                print(' ~ ', end=' ')
+                result += ' ~  '
 
         return result
 
     def __str__(self):
         result = '  '
         for i in range(10):
-            result += f'{i} '
+            result += f' {i}  '
 
         result += '\n'
 
@@ -93,19 +112,24 @@ class Field:
         return result
 
     @classmethod
-    def show_both_fields(cls):
+    def show_both_fields(cls, player: int):
         result = '  '
         for i in range(10):
-            result += f'{i} '
+            result += f' {i}  '
 
         result += ' ' * 6 + result + '\n'
 
         for i in range(10):
-            for field in cls._fields:
-                result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
-                print(' ' * 6)
+            # for field in cls._fields:
+            #     result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
+            #     print(' ' * 6)
 
-            result += '\n'
+            if player == 1:
+                result += f'{i} ' + cls._create_line(cls._fields[0]._field[i]) + ' ' * 6
+                result += f'{i} ' + cls._create_hidden_line(cls._fields[1]._field[i]) + '\n'
+            else:
+                result += f'{i} ' + cls._create_hidden_line(cls._fields[0]._field[i]) + ' ' * 6
+                result += f'{i} ' + cls._create_line(cls._fields[1]._field[i]) + '\n'
 
         return result
 

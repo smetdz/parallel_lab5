@@ -1,7 +1,6 @@
 from player import Player
 from field import Field, BadParameter, InaccessiblePlace, Ship
 from server import Server
-# from threading import Thread
 
 
 class Game:
@@ -48,7 +47,7 @@ class Game:
                     message = "Wrong place. Try again"
                     self._tell_the_player(player1, message)
                     continue
-            elif cell == '*':
+            elif cell == ' * ':
                 message = "Wrong place. Try again"
                 self._tell_the_player(player1, message)
                 continue
@@ -57,30 +56,21 @@ class Game:
 
             break
 
-    def _show_fields(self, player1: Player, player2: Player):
-        message = Field.show_both_fields()
-
+    def _show_fields(self, player1: Player, c_p: int):
+        message = Field.show_both_fields(c_p)
         self._tell_the_player(player1, message)
-        self._tell_the_player(player2, message)
 
     def _game_process(self, player1: Player, player2: Player):
-        # thread1 = Thread(target=self._ship_arrangement, args=(player1, ))
-        # thread2 = Thread(target=self._ship_arrangement, args=(player2, ))
-
-        # thread1.start()
-        # thread2.start()
-        #
-        # thread1.join()
-        # thread2.join()
-
         self._ship_arrangement(player1)
         self._ship_arrangement(player2)
 
         while True:
-            self._show_fields(player1, player2)
+            self._show_fields(player1, 1)
+            self._show_fields(player2, 2)
             self._move(player1, player2)
 
-            self._show_fields(player1, player2)
+            self._show_fields(player1, 1)
+            self._show_fields(player2, 2)
             self._move(player2, player1)
 
             if player1.is_lose:
@@ -91,6 +81,9 @@ class Game:
                 break
 
         message = f"Player {winner.name} won!"
+
+        self._tell_the_player(player1, message)
+        self._tell_the_player(player2, message)
 
     def _ship_arrangement(self, player: Player):
         message = '1 - Random ships position, 2 - Arrange ships yourself'

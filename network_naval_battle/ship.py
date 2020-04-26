@@ -13,5 +13,5 @@ class Ship:
 
     def __str__(self):
         if self.is_alive:
-            return '[]'
+            return '[ ]'
         return '[x]'
