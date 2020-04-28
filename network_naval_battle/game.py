@@ -68,9 +68,9 @@ class Game:
 
             break
 
-    def _show_fields(self, player1: Player, player2: Player):
-        message1 = Field.show_both_fields(1)
-        message2 = Field.show_both_fields(2)
+    def _show_fields(self, player1: Player, player2: Player, hide: bool = True):
+        message1 = Field.show_both_fields(1, hide)
+        message2 = Field.show_both_fields(2, hide)
 
         self._tell_to_player(player1, message1)
         self._tell_to_player(player2, message2)
@@ -97,6 +97,8 @@ class Game:
             if self._loose_check(player1):
                 winner = player2
                 break
+
+        self._show_fields(player1, player2, False)
 
         message = f"Player {winner.name} won!"
 

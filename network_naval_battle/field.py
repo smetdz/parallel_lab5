@@ -123,7 +123,7 @@ class Field:
         return result
 
     @classmethod
-    def show_both_fields(cls, player: int):
+    def show_both_fields(cls, player: int, hide: bool = True):
         result = '  '
         for i in range(cls._field_size):
             result += f' {i}  '
@@ -131,9 +131,13 @@ class Field:
         result += ' ' * 6 + result + '\n'
 
         for i in range(cls._field_size):
-            # for field in cls._fields:
-            #     result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
-            #     print(' ' * 6)
+            if not hide:
+                for field in cls._fields:
+                    result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
+                    print(' ' * 6)
+
+                result += '\n'
+                print('\n')
 
             if player == 1:
                 result += f'{i} ' + cls._create_line(cls._fields[0]._field[i]) + ' ' * 6
@@ -142,7 +146,7 @@ class Field:
                 result += f'{i} ' + cls._create_hidden_line(cls._fields[0]._field[i]) + ' ' * 6
                 result += f'{i} ' + cls._create_line(cls._fields[1]._field[i]) + '\n'
 
-        return result
+        return result + '\n'
 
 
 class BadParameter(Exception):
