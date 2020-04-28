@@ -19,6 +19,7 @@ if __name__ == '__main__':
         cur_data = read()
 
         if not cur_data:
+            sock.close()
             break
 
         cur_data = cur_data.decode().split('|')
@@ -30,3 +31,5 @@ if __name__ == '__main__':
                 send()
         except IndexError:
             continue
+
+

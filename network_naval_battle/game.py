@@ -87,19 +87,26 @@ class Game:
 
         while True:
             self._move(player1, player2)
+
+            if self._loose_check(player2):
+                winner = player1
+                break
+
             self._move(player2, player1)
 
-            if player1.is_lose:
+            if self._loose_check(player1):
                 winner = player2
-                break
-            elif player2.is_lose:
-                winner = player1
                 break
 
         message = f"Player {winner.name} won!"
 
         self._tell_the_player(player1, message)
         self._tell_the_player(player2, message)
+
+    @staticmethod
+    def _loose_check(player: Player):
+        if player.is_lose:
+            return True
 
     def _ship_arrangement(self, player: Player):
         message = '1 - Random ships position, 2 - Arrange ships yourself'

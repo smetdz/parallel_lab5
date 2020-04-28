@@ -1,23 +1,31 @@
 class Player:
     def __init__(self, socket, addr, field, name):
-        self.socket = socket
-        self.addr = addr
+        self._socket = socket
+        self._addr = addr
         self.field = field
-        self.name = name
-        self.ships_count = 6
+        self._name = name
+        self._ships_count = 6
 
     @property
-    def get_socket(self):
-        return self.socket
+    def socket(self):
+        return self._socket
 
     @property
     def get_field(self):
         return self.field
 
     @property
-    def get_name(self):
-        return self.name
+    def name(self):
+        return self._name
 
     @property
     def is_lose(self):
-        return not bool(self.ships_count)
+        return not bool(self._ships_count)
+
+    @property
+    def ships_count(self):
+        return self._ships_count
+
+    @ships_count.setter
+    def ships_count(self, count):
+        self._ships_count = count

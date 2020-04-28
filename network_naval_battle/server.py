@@ -16,7 +16,7 @@ class Server:
             client_sock, addr = self._server_socket.accept()
             self.clients.append((client_sock, addr))
 
-            self.send(client_sock, 'Welcome\n')
+            self.send(client_sock, 'Welcome\n', False)
 
             print(f"Client {i}: sock - {client_sock} addr - {addr}")
 
