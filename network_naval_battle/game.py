@@ -37,7 +37,12 @@ class Game:
             x, y = answer.split()
             x, y = int(x), int(y)
 
-            cell = player2.field.get_cell(x, y)
+            try:
+                cell = player2.field.get_cell(x, y)
+            except BadParameter:
+                message = "Wrong place. Try again"
+                self._tell_the_player(player1, message)
+                continue
 
             if isinstance(cell, Ship):
                 if cell.is_alive:
@@ -100,7 +105,7 @@ class Game:
         answer = self._tell_the_player(player, message, True)
 
         if int(answer) - 1:
-            ships_count = 6
+            ships_count = Field.ships_count
             while ships_count:
                 message = str(player.field) + "\n Select the cell where you want to put the ship\n" \
                                               "The answer should be this kind: x y"

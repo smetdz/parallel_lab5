@@ -11,14 +11,23 @@ class Field:
     }
 
     _fields = list()
+    _field_size = 6
+    _ships_count = 6
 
     def __init__(self):
-        self._field = [[self._cell_types['water'] for _ in range(10)] for _ in range(10)]
+        self._field = [[self._cell_types['water'] for _ in range(self._field_size)] for _ in range(self._field_size)]
         self._fields.append(self)
 
-    @staticmethod
-    def _check(x: int, y: int):
-        if x not in range(0, 10) or y not in range(0, 10):
+    @property
+    def field_size(self):
+        return self._field_size
+
+    @property
+    def ships_count(self):
+        return self._ships_count
+
+    def _check(self, x: int, y: int):
+        if x not in range(self._field_size) or y not in range(self._field_size):
             raise BadParameter
 
     def set_around(self, x: int, y: int, new_type: str):
@@ -33,6 +42,7 @@ class Field:
 
     def try_to_place_ship(self, x: int, y: int):
         cell = self._field[x][y]
+        print(self._field_size)
         if (cell != self._cell_types['taken']) and not isinstance(cell, Ship):
             self.change_cell_type(x, y, 'ship')
             self.set_around(x, y, 'taken')
@@ -53,11 +63,11 @@ class Field:
         return self._field[x][y]
 
     def random_ships_placed(self):
-        ships_count = 6
+        ships_count = self._ships_count
 
         while ships_count:
-            x = randint(0, 9)
-            y = randint(0, 9)
+            x = randint(0, self._field_size - 1)
+            y = randint(0, self._field_size - 1)
 
             try:
                 self.try_to_place_ship(x, y)
@@ -101,7 +111,7 @@ class Field:
 
     def __str__(self):
         result = '  '
-        for i in range(10):
+        for i in range(self._field_size):
             result += f' {i}  '
 
         result += '\n'
@@ -115,12 +125,12 @@ class Field:
     @classmethod
     def show_both_fields(cls, player: int):
         result = '  '
-        for i in range(10):
+        for i in range(cls._field_size):
             result += f' {i}  '
 
         result += ' ' * 6 + result + '\n'
 
-        for i in range(10):
+        for i in range(cls._field_size):
             # for field in cls._fields:
             #     result += f'{i} ' + cls._create_line(field._field[i]) + ' ' * 6
             #     print(' ' * 6)
