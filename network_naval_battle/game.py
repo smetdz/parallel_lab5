@@ -1,6 +1,7 @@
 from player import Player
 from field import Field, BadParameter, InaccessiblePlace, Ship
 from server import Server
+from threading import Thread
 
 
 class Game:
@@ -65,8 +66,14 @@ class Game:
         self._tell_the_player(player2, message2)
 
     def _game_process(self, player1: Player, player2: Player):
-        self._ship_arrangement(player1)
-        self._ship_arrangement(player2)
+        cl_thd1 = Thread(target=self._ship_arrangement, args=(player1, ))
+        cl_thd2 = Thread(target=self._ship_arrangement, args=(player2, ))
+
+        cl_thd1.start()
+        cl_thd2.start()
+
+        cl_thd1.join()
+        cl_thd2.join()
 
         while True:
             self._show_fields(player1, player2)
