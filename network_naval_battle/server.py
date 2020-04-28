@@ -4,7 +4,12 @@ import socket
 class Server:
     def __init__(self):
         self._server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self._server_socket.bind(('localhost', 5001))
         self.clients = []
+        self._server_socket.listen(2)
+
+        print('Server started')
 
     def start_server(self):
         self._server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
