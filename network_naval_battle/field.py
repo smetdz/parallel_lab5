@@ -32,7 +32,8 @@ class Field:
                     continue
 
     def try_to_place_ship(self, x: int, y: int):
-        if self._field[x][y] != self._cell_types['taken']:
+        cell = self._field[x][y]
+        if (cell != self._cell_types['taken']) and not isinstance(cell, Ship):
             self.change_cell_type(x, y, 'ship')
             self.set_around(x, y, 'taken')
         else:

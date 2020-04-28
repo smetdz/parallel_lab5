@@ -20,10 +20,11 @@ class Game:
         self._game_process(player1, player2)
 
     def _tell_the_player(self, player: Player, message: str, need_answer: bool = False):
-        self._server.send(player.socket, message)
-
         if need_answer:
+            self._server.send(player.socket, message)
             return self._server.read(player.socket).strip()
+        else:
+            self._server.send(player.socket, message, False)
 
     def _move(self, player1: Player, player2: Player):
         while True:

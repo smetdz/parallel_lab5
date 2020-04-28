@@ -31,8 +31,13 @@ class Server:
         print("Clients were closed")
 
     @staticmethod
-    def send(client_sock: socket.socket, response: str):
+    def send(client_sock: socket.socket, response: str, a_resp: bool = True):
         print(f"send response {response}")
+
+        if a_resp:
+            response = 'awaiting response|' + response
+        else:
+            response = 'non|' + response
 
         response = response.encode()
         client_sock.send(response)
