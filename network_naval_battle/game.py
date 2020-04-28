@@ -130,7 +130,7 @@ class Game:
                     self._tell_the_player(player, message)
                     continue
         else:
-            player.field.random_ships_placed()
+            player.field.random_arrangement_of_ships()
             message = str(player.field)
 
             self._tell_the_player(player, message)

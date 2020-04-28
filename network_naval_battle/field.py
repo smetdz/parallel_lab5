@@ -62,7 +62,7 @@ class Field:
 
         return self._field[x][y]
 
-    def random_ships_placed(self):
+    def random_arrangement_of_ships(self):
         ships_count = self._ships_count
 
         while ships_count:
