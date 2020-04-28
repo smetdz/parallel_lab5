@@ -139,6 +139,8 @@ class Field:
                 result += '\n'
                 print('\n')
 
+                continue
+
             if player == 1:
                 result += f'{i} ' + cls._create_line(cls._fields[0]._field[i]) + ' ' * 6
                 result += f'{i} ' + cls._create_hidden_line(cls._fields[1]._field[i]) + '\n'
