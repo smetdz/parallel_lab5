@@ -23,7 +23,10 @@ if __name__ == '__main__':
 
         cur_data = cur_data.decode().split('|')
 
-        print(cur_data[1])
+        print(cur_data[0])
 
-        if cur_data[0] == 'awaiting response':
-            send()
+        try:
+            if cur_data[1] == 'awaiting response':
+                send()
+        except IndexError:
+            continue

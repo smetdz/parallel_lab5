@@ -29,6 +29,7 @@ class Game:
 
     def _move(self, player1: Player, player2: Player):
         while True:
+            self._show_fields(player1, player2)
             message = f"The {player1.name} walks"
 
             self._tell_the_player(player2, message)
@@ -49,6 +50,10 @@ class Game:
                     cell.kill()
                     player2.ships_count -= 1
                     player2.field.set_around(x, y, 'fired')
+
+                    if player2.ships_count:
+                        continue
+
                     break
                 else:
                     message = "Wrong place. Try again"
@@ -81,10 +86,7 @@ class Game:
         cl_thd2.join()
 
         while True:
-            self._show_fields(player1, player2)
             self._move(player1, player2)
-
-            self._show_fields(player1, player2)
             self._move(player2, player1)
 
             if player1.is_lose:

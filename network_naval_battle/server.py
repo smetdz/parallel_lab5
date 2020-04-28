@@ -35,9 +35,7 @@ class Server:
         print(f"send response {response}")
 
         if a_resp:
-            response = 'awaiting response|' + response
-        else:
-            response = 'non|' + response
+            response += '|awaiting response'
 
         response = response.encode()
         client_sock.send(response)
