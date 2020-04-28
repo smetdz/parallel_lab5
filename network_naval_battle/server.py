@@ -28,6 +28,8 @@ class Server:
 
         print("Clients were closed")
 
+        self._server_socket.close()
+
     @staticmethod
     def send(client_sock: socket.socket, response: str, a_resp: bool = True):
         print(f"send response {response}")
