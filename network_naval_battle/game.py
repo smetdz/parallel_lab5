@@ -76,8 +76,8 @@ class Game:
         self._tell_to_player(player2, message2)
 
     def _game_process(self, player1: Player, player2: Player):
-        cl_thd1 = Thread(target=self._ship_arrangement, args=(player1, ))
-        cl_thd2 = Thread(target=self._ship_arrangement, args=(player2, ))
+        cl_thd1 = Thread(target=self._ships_arrangement, args=(player1, ))
+        cl_thd2 = Thread(target=self._ships_arrangement, args=(player2, ))
 
         cl_thd1.start()
         cl_thd2.start()
@@ -114,8 +114,9 @@ class Game:
         answer = self._tell_to_player(player, message, True)
 
         if int(answer) - 1:
-            ships_count = Field.ships_count
-            while ships_count:
+            count = player.field.ships_count
+            print(type(count))
+            while count:
                 message = str(player.field) + "\n Select the cell where you want to put the ship\n" \
                                               "The answer should be this kind: x y"
 
@@ -124,7 +125,7 @@ class Game:
 
                 try:
                     player.field.try_to_place_ship(int(x), int(y))
-                    ships_count -= 1
+                    count -= 1
                 except InaccessiblePlace:
                     message = 'Сan`t be put here. Try again'
                     self._tell_to_player(player, message)
