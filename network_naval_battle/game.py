@@ -108,7 +108,7 @@ class Game:
         if player.is_lose:
             return True
 
-    def _ship_arrangement(self, player: Player):
+    def _ships_arrangement(self, player: Player):
         message = '1 - Random ships position, 2 - Arrange ships yourself'
 
         answer = self._tell_to_player(player, message, True)
