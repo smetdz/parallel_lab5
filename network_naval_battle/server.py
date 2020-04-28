@@ -11,13 +11,6 @@ class Server:
 
         print('Server started')
 
-    def start_server(self):
-        self._server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self._server_socket.bind(('localhost', 5001))
-        self._server_socket.listen(2)
-
-        print('Server started')
-
     def get_clients(self):
         for i in range(2):
             client_sock, addr = self._server_socket.accept()
