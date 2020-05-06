@@ -1,5 +1,6 @@
-from ship import Ship
 from random import randint
+
+from ship import Ship
 
 
 class Field:

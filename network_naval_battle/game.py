@@ -1,7 +1,8 @@
+from threading import Thread
+
 from player import Player
 from field import Field, BadParameter, InaccessiblePlace, Ship
 from server import Server
-from threading import Thread
 
 
 class Game:
@@ -117,7 +118,6 @@ class Game:
 
         if int(answer) - 1:
             count = player.field.ships_count
-            print(type(count))
             while count:
                 message = str(player.field) + "\n Select the cell where you want to put the ship\n" \
                                               "The answer should be this kind: x y"
