@@ -70,8 +70,8 @@ class Game:
             break
 
     def _show_fields(self, player1: Player, player2: Player, hide: bool = True):
-        message1 = Field.show_both_fields(1, hide)
-        message2 = Field.show_both_fields(2, hide)
+        message1 = Field.show_both_fields(player1.name, hide)
+        message2 = Field.show_both_fields(player2.name, hide)
 
         self._tell_to_player(player1, message1)
         self._tell_to_player(player2, message2)
