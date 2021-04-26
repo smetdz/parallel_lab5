@@ -124,7 +124,7 @@ class Field:
         return result
 
     @classmethod
-    def show_both_fields(cls, player: int, hide: bool = True):
+    def show_both_fields(cls, player_name: str, hide: bool = True):
         result = '  '
         for i in range(cls._field_size):
             result += f' {i}  '
@@ -142,7 +142,7 @@ class Field:
 
                 continue
 
-            if player == 1:
+            if player_name == 'player1':
                 result += f'{i} ' + cls._create_line(cls._fields[0]._field[i]) + ' ' * 6
                 result += f'{i} ' + cls._create_hidden_line(cls._fields[1]._field[i]) + '\n'
             else:
